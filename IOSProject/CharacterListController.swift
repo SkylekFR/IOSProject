@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CharacterListController: UITableViewController {
+class CharacterListController: UICollectionViewController {
     
     private enum Section {
         case main
@@ -17,17 +17,80 @@ class CharacterListController: UITableViewController {
         case character(SerieCharacter)
     }
     
-    private var diffableDataSource: UITableViewDiffableDataSource<Section, Item>!
+    private var diffableDataSource: UICollectionViewDiffableDataSource<Section, Item>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        diffableDataSource = UITableViewDiffableDataSource<Section, Item>(tableView: tableView,
+        
+        collectionView.collectionViewLayout = createLayout()
+        
+        diffableDataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView,
         cellProvider: {
-            (tableView, indexPath item) -> UITableViewCell? in
+            (tableView, indexPath, item) -> UICollectionViewCell? in
+            switch item {
+            case .character(let character):
+                let cell =
+                    tableView.dequeueReusableCell(withReuseIdentifier: "character_list_cell", for: indexPath) as! CharacterCellCollectionViewCell
+                cell.label.text = character.name
+                cell.image.loadImage(from: character.imageURL)
+               
+               
+                return cell
+            }
         })
+        
+        let snapshot = createSnapshot(serieCharacters: [])
+        diffableDataSource.apply(snapshot)
+        NetworkManager.sharedInstance.fetchCharacters { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+
+            case .success(let paginatedElements):
+                let serieCharacters = paginatedElements.decodedElements
+                let snapshot = self.createSnapshot(serieCharacters: serieCharacters)
+
+                DispatchQueue.main.async {
+                    self.diffableDataSource.apply(snapshot)
+                }
+            }
+        }
+    }
+    
+    private func createSnapshot(serieCharacters: [SerieCharacter]) -> NSDiffableDataSourceSnapshot<Section, Item> {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot.appendSections([.main])
+        
+        let items = serieCharacters.map(Item.character)
+        snapshot.appendItems(items, toSection: .main)
+        
+        return snapshot
     }
 
+    private func createLayout() -> UICollectionViewLayout {
+       
+        
+        return UICollectionViewCompositionalLayout(sectionProvider: {
+            (section, environnement) -> NSCollectionLayoutSection? in
+            let snapshot = self.diffableDataSource.snapshot()
+            let currentSection = snapshot.sectionIdentifiers[section]
+            
+            switch currentSection {
+            case .main:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                      heightDimension: .estimated(150))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(150))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
+                
+                let section = NSCollectionLayoutSection(group: group)
+                
+                return section
+            }
+        })
+    }
     
 
 }
