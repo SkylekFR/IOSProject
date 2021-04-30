@@ -19,6 +19,7 @@
 		EB4E878325E6944900B33220 /* PaginatedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4E878025E6944900B33220 /* PaginatedElements.swift */; };
 		EB4E878425E6944900B33220 /* PaginationInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4E878125E6944900B33220 /* PaginationInformation.swift */; };
 		EB4E878525E6944900B33220 /* SerieCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4E878225E6944900B33220 /* SerieCharacter.swift */; };
+		EB782525263C037A0010EA44 /* CharacterDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB782524263C037A0010EA44 /* CharacterDetailTableViewController.swift */; };
 		EB863FA025EFD52D00A436BE /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB863F9F25EFD52D00A436BE /* NetworkManager.swift */; };
 		EB863FAC25EFE1CF00A436BE /* CharacterCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB863FAB25EFE1CF00A436BE /* CharacterCellCollectionViewCell.swift */; };
 		EB863FB125EFF5BD00A436BE /* UIImageView+loadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB863FB025EFF5BD00A436BE /* UIImageView+loadImage.swift */; };
@@ -60,6 +61,7 @@
 		EB4E878025E6944900B33220 /* PaginatedElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaginatedElements.swift; path = ../../../CallAPI/CallAPI/Class/PaginatedElements.swift; sourceTree = "<group>"; };
 		EB4E878125E6944900B33220 /* PaginationInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaginationInformation.swift; path = ../../../CallAPI/CallAPI/Class/PaginationInformation.swift; sourceTree = "<group>"; };
 		EB4E878225E6944900B33220 /* SerieCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SerieCharacter.swift; path = ../../../CallAPI/CallAPI/Class/SerieCharacter.swift; sourceTree = "<group>"; };
+		EB782524263C037A0010EA44 /* CharacterDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailTableViewController.swift; sourceTree = "<group>"; };
 		EB863F9F25EFD52D00A436BE /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		EB863FAB25EFE1CF00A436BE /* CharacterCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		EB863FB025EFF5BD00A436BE /* UIImageView+loadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+loadImage.swift"; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				EB863F9F25EFD52D00A436BE /* NetworkManager.swift */,
 				EB4E873A25E693BF00B33220 /* SceneDelegate.swift */,
 				EB4E873C25E693BF00B33220 /* CharacterListController.swift */,
+				EB782524263C037A0010EA44 /* CharacterDetailTableViewController.swift */,
 				EB4E873E25E693BF00B33220 /* Main.storyboard */,
 				EB4E874425E693C000B33220 /* Assets.xcassets */,
 				EB4E874625E693C000B33220 /* LaunchScreen.storyboard */,
@@ -291,6 +294,7 @@
 				EB4E878425E6944900B33220 /* PaginationInformation.swift in Sources */,
 				EB4E878525E6944900B33220 /* SerieCharacter.swift in Sources */,
 				EB4E878325E6944900B33220 /* PaginatedElements.swift in Sources */,
+				EB782525263C037A0010EA44 /* CharacterDetailTableViewController.swift in Sources */,
 				EB4E873D25E693BF00B33220 /* CharacterListController.swift in Sources */,
 				EB863FA025EFD52D00A436BE /* NetworkManager.swift in Sources */,
 				EB4E874325E693BF00B33220 /* IOSProject.xcdatamodeld in Sources */,

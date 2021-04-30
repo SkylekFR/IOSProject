@@ -9,6 +9,8 @@ import UIKit
 
 class CharacterListController: UICollectionViewController {
     
+    var serieCharacterList : [SerieCharacter] = []
+    
     private enum Section {
         case main
     }
@@ -33,6 +35,7 @@ class CharacterListController: UICollectionViewController {
                 let cell =
                     tableView.dequeueReusableCell(withReuseIdentifier: "character_list_cell", for: indexPath) as! CharacterCellCollectionViewCell
                 cell.label.text = character.name
+                cell.secondaryLabel.text = character.gender
                 cell.image.loadImage(from: character.imageURL)
                
                
@@ -48,14 +51,18 @@ class CharacterListController: UICollectionViewController {
                 print(error)
 
             case .success(let paginatedElements):
-                let serieCharacters = paginatedElements.decodedElements
-                let snapshot = self.createSnapshot(serieCharacters: serieCharacters)
+                self.serieCharacterList = paginatedElements.decodedElements
+                let snapshot = self.createSnapshot(serieCharacters: self.serieCharacterList)
 
                 DispatchQueue.main.async {
                     self.diffableDataSource.apply(snapshot)
                 }
             }
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destination = segue.destination as! CharacterDetailTableViewController
     }
     
     private func createSnapshot(serieCharacters: [SerieCharacter]) -> NSDiffableDataSourceSnapshot<Section, Item> {
@@ -69,6 +76,13 @@ class CharacterListController: UICollectionViewController {
     }
 
     private func createLayout() -> UICollectionViewLayout {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+    
+
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
        
         
         return UICollectionViewCompositionalLayout(sectionProvider: {
@@ -79,10 +93,10 @@ class CharacterListController: UICollectionViewController {
             switch currentSection {
             case .main:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                      heightDimension: .estimated(150))
+                                                      heightDimension: .estimated(260))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(150))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(260))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
                 
                 let section = NSCollectionLayoutSection(group: group)
@@ -92,6 +106,32 @@ class CharacterListController: UICollectionViewController {
         })
     }
     
+    
+    
 
+}
+extension CharacterListController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        print("test")
+        let searchQuery = searchController.searchBar.text ?? ""
+        if(searchQuery.isEmpty) {
+            let snapshot = createSnapshot(serieCharacters: serieCharacterList)
+            diffableDataSource.apply(snapshot)
+        }
+        else {
+            var filteredSerieCharacter: [SerieCharacter] = []
+            for character in serieCharacterList {
+                if(character.name.contains(searchQuery) || character.gender.contains(searchQuery)) {
+                    filteredSerieCharacter.append(character)
+                }
+                
+            }
+            let snapshot = createSnapshot(serieCharacters: filteredSerieCharacter)
+            diffableDataSource.apply(snapshot)
+        }
+        // TODO: Update tableview row
+       
+       
+    }
 }
 

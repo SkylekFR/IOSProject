@@ -10,4 +10,5 @@ import UIKit
 class CharacterCellCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var secondaryLabel: UILabel!
 }
