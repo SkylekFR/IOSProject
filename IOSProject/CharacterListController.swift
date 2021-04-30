@@ -62,7 +62,14 @@ class CharacterListController: UICollectionViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! CharacterDetailTableViewController
+        if(segue.identifier == "showCharacterDetail") {
+            if let indexPath = collectionView.indexPath(for: sender as! UICollectionViewCell){
+                let destination = segue.destination as! CharacterDetailTableViewController
+                destination.serieCharacter = serieCharacterList[indexPath.row]
+            
+            }
+            
+    }
     }
     
     private func createSnapshot(serieCharacters: [SerieCharacter]) -> NSDiffableDataSourceSnapshot<Section, Item> {
