@@ -66,6 +66,9 @@ class CharacterListController: UICollectionViewController {
             if let indexPath = collectionView.indexPath(for: sender as! UICollectionViewCell){
                 let destination = segue.destination as! CharacterDetailTableViewController
                 destination.serieCharacter = serieCharacterList[indexPath.row]
+                
+                /// ne fonctionne pas correctement si on est en mode recherche car l'index ne correspond pas au snapshot cliqué mais à la position de la cellule dans le tableau. Donc un item qui est a la position 5 dans la serieCharacterList peut être a la position 2 dans la collection view.
+            // je n'ai donc pas réussi à récupérer le bon indexpath pour envoyer le bon character quand on est en mode recherche
             
             }
             
